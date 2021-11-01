@@ -2,29 +2,28 @@
   <div class="HomePage">
     <div class="HomePage__shows-slider">
       <ShowsSlider ref="slider" :options="showsSliderOptions">
-        <div :key="index" :class="`slide--${index}`" v-for="(movie, index) in showsList">
-          <MovieDetails :movie="movie"/>
+        <div :key="index" :class="`slide--${index}`" v-for="(show, index) in showsList">
+          <ShowDetails :show="show"/>
         </div>
       </ShowsSlider>
     </div>
-    <!--    <div class="Home__slider-list">
-         <MovieSlider :key="title" v-for="[title, value] in showsWithGenres" :category-title="title" :shows="value" />
-        </div>-->
+    <div class="HomePage__slider-list">
+      <ShowsList :key="title" v-for="[title, value] in showsWithGenres" :category-title="title" :shows="value"/>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import ShowsSlider from '../../components/ShowsSlider/ShowsSlider.vue';
-import MovieDetails from '../../components/MovieDetails/MovieDetails.vue';
-//import MovieSlider from '../../components/MovieSlider/MovieSlider.vue';
+import ShowDetails from '../../components/ShowDetails/ShowDetails.vue';
+import ShowsList from '../../components/ShowsList/ShowsList.vue';
 
 export default {
   name: 'HomePage',
   data() {
     return {
       showsList: [],
-      //movieList: [],
       topRatedShowsList: [],
       showsWithGenres: new Map(),
       genres: [],
@@ -45,8 +44,8 @@ export default {
   },
   components: {
     ShowsSlider,
-    MovieDetails,
-    //MovieSlider,
+    ShowDetails,
+    ShowsList
   },
   mounted() {
     this.$refs.slider.toggleLoading();
@@ -57,6 +56,31 @@ export default {
           this.showsList = response.data.filter(res => res.image != null).map(show => {
             return {...show, image: show.image.original}
           }).splice(0, 10);
+
+          this.topRatedShowsList = response.data.filter(res => res.rating != null && res.rating.average > 8).map(show => {
+            return {...show, image:show.image.original }
+          }).splice(10, 10);
+
+          response.data.filter(res => res.genres != null && res.genres.length !== 0).map(show => {
+            return this.genres.push(...show.genres);
+          });
+          this.genres = [...new Set(this.genres)];
+
+          this.showsWithGenres.set("Top Rated", this.topRatedShowsList);
+          this.genres.forEach(genre => {
+            this.showsList.forEach(show => {
+              if(show.genres.includes(genre)){
+                if(this.showsWithGenres.has(genre)){
+                  this.showsWithGenres.get(genre).push(show);
+                }else {
+                  let newArray = [];
+                  newArray.push(show);
+                  this.showsWithGenres.set(genre, newArray);
+                }
+              }
+            })
+          })
+
         })
         .then(() => {
           this.$refs.slider.reload();
