@@ -95,22 +95,3 @@ ul {
   justify-content: space-between;
   align-items: center;
 }
-
-.page__content {
-  display: flex;
-  flex-direction: column;
-  padding: 6rem 1rem 0;
-  @include sm {
-    padding: 3rem 2rem 0;
-  }
-}
-
-.page__title {
-  font-size: 1.25rem;
-  @include sm {
-    font-size: 1.5rem;
-  }
-  @include md {
-    font-size: 2rem;
-  }
-}

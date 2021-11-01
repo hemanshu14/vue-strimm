@@ -17,6 +17,10 @@
     background-position: 42rem bottom;
   }
 
+  @include md {
+    background-position: 32rem bottom;
+  }
+
   &:before {
     content: '';
     position: absolute;

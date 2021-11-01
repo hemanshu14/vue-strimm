@@ -10,6 +10,8 @@
 
 <script>
 
+  import {routes} from "@/constants/constants";
+
   export default {
     name: 'ShowListItem',
     props: {
@@ -21,7 +23,7 @@
     },
     methods: {
       showDetails(showId){
-        //this.$router.push(`${routes.showDetails}/${showId}`);
+        this.$router.push(`${routes.showEpisodeDetails}/${showId}`);
       },
     },
   }
