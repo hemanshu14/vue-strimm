@@ -4,7 +4,7 @@
       <div @click.stop>
         <ShowDetails :show="showDetails"/>
         <div class="HomePage__slider-list">
-          <div class="ShowsList__wrapper">
+          <div class="ShowsList__wrapper" v-if="seasonsWithEpisodes.size>0">
             <div>
               <select @change="getSeasonsWithEpisodes($event.target.value)">
                 <option disabled value="">Seasons</option>
@@ -12,6 +12,9 @@
               </select>
             </div>
             <EpisodeDetails :key="title" v-for="[title, value] in seasonsWithEpisodes" :episode-id="title" :episodes="value"/>
+          </div>
+          <div class="ShowsList__wrapper" v-else>
+            No Episodes Data to display
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@ export default {
     getSeasonsWithEpisodes(value) {
       this.seasonsWithEpisodes = new Map;
       let seasonId = Number(value);
-      this.episodesDetails.forEach(episode => {
+      this.episodesDetails.filter(ep => ep.image != null).forEach(episode => {
         if (episode.season === seasonId) {
           if (this.seasonsWithEpisodes.has(seasonId)) {
             this.seasonsWithEpisodes.get(seasonId).push(episode);

@@ -1,6 +1,10 @@
 @import "../../assets/scss/helpers/breakpoints";
 @import "../../assets/scss/helpers/variables";
 
+.fa-search{
+  color: $gray600 !important;
+}
+
 .Header {
   position: fixed;
   top: 0;
@@ -22,7 +26,7 @@
     padding: 1rem 2rem;
   }
 
-  /*.hamburger {
+  .hamburger {
     z-index: $z-index-nav;
     display: block;
     margin-left: .5rem;
@@ -30,7 +34,7 @@
     @include md {
       display: none;
     }
-  }*/
+  }
 
   &--bg {
     background-color: $gray900;

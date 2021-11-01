@@ -3,7 +3,7 @@
   top: calc(100% + 1rem);
   right: 50%;
   padding: .5rem;
-  background-color: rgba(0, 0, 0, .85);
+  background-color: $gray600;
   border: 1px solid $gray700;
   border-top: 2px solid $white;
   color: $white;
@@ -63,7 +63,6 @@
       left: 50%;
       width: 0;
       height: 2px;
-      background-color: $red;
       transform: translateX(-50%);
       transition: width .2s ease-in-out;
     }

@@ -4,39 +4,42 @@
       <Logo class="Header__logo" />
     </router-link>
 
-<!--    <div class="Header__search" :class="[{ 'Header__search&#45;&#45;active': search }, 'Header__search']">
+   <div class="Header__search" :class="[{ 'Header__search--active': search }, 'Header__search']">
       <label class="flex-jc">
         <font-awesome-icon :icon="['fas', 'search']" class="Header__search-icon" />
         <input
             name="search"
             type="text"
-            placeholder="Titles, characters, genres"
+            placeholder="Show Titles"
             v-model="search"
             class="Header__search-input"
         >
       </label>
-    </div>-->
+    </div>
 
-<!--    <div class="Header__actions">
+    <div class="Header__actions">
       <ProfileDropdown />
-      <button :class="[{ 'hamburger&#45;&#45;active': isMenuOpened }, 'hamburger', 'button']" v-on:click="toggleSidebar">
+      <button :class="[{ 'hamburger--active': isMenuOpened }, 'hamburger', 'button']" v-on:click="toggleSidebar">
         <span />
         <span />
         <span />
       </button>
-    </div>-->
+    </div>
   </header>
 </template>
 
 <script>
 import Logo from '../../assets/images/srtimm-logo.svg';
-import { routes, actions } from '@/constants/constants';
+import { routes } from '@/constants/constants';
+import debounce from '../../utilities/debounce';
+import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 export default {
   name: 'AuthorizedHeaderView',
   data() {
     return {
       search: '',
+      isMenuOpened: false,
       isScrolled: false,
       homeRoute: routes.homePage
     };
@@ -47,13 +50,16 @@ export default {
     },
   },
   components: {
-    //ProfileDropdown,
+    ProfileDropdown,
     Logo,
   },
   watch: {
-    /*search: debounce(function(value) {
+    path() {
+      this.isMenuOpened = false;
+    },
+    search: debounce(function(value) {
       this.$router.push(`${routes.search}/${value}`);
-    }, 600),*/
+    }, 600),
   },
   methods: {
     handleScroll() {
@@ -61,11 +67,11 @@ export default {
       if (currentScrollPosition > 30) return this.isScrolled = true;
       else return this.isScrolled = false;
     },
-    /*toggleSidebar() {
+    toggleSidebar() {
       this.isMenuOpened = !this.isMenuOpened;
       if (this.isMenuOpened) document.documentElement.classList.add('no-scroll');
       else document.documentElement.classList.remove('no-scroll');
-    },*/
+    },
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);

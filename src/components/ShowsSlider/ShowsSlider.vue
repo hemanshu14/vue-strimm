@@ -245,17 +245,14 @@
       },
     },
     created() {
-      // Read settings from options object
       if (this.options) {
         for (let key in this.options) {
           this.initialSettings[key] = this.options[key];
         }
       }
-      // Sort breakpoints
       if (this.initialSettings.responsive) {
         this.initialSettings.responsive.sort(this.compare);
       }
-      // Set first load settings
       Object.assign(this.settings, this.initialSettings);
     },
     mounted() {

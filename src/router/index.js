@@ -7,6 +7,7 @@ import SignInPage from "@/pages/SignInPage/SignInPage";
 import HomePage from "@/pages/HomePage/HomePage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
 import ShowEpisodeDetails from "@/pages/ShowEpisodeDetails/ShowEpisodeDetails";
+import Search from "@/pages/Search/Search";
 
 
 Vue.use(Router);
@@ -33,7 +34,7 @@ const router = new Router({
       name: 'HomePage',
       component: HomePage,
       meta: {
-        requiresAuth: true,
+        authRequired: true,
       },
     },
     {
@@ -46,26 +47,26 @@ const router = new Router({
       name: 'ShowEpisodeDetails',
       component: ShowEpisodeDetails,
       meta: {
-        requiresAuth: true,
+        authRequired: true,
       },
     },
-    /*{
+    {
       path: `${routes.search}/:search`,
       name: 'Search',
       component: Search,
       meta: {
-        requiresAuth: true,
+        authRequired: true,
       },
-    },*/
+    },
   ],
 });
 
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const authRequired = to.matched.some(record => record.meta.authRequired);
 
-  if (requiresAuth && !currentUser) next(routes.signIn);
-  else if (!requiresAuth && currentUser) next(routes.home);
+  if (authRequired && !currentUser) next(routes.signIn);
+  else if (!authRequired && currentUser) next(routes.homePage);
   else next();
 });
 
