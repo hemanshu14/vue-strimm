@@ -4,7 +4,7 @@
       <div class="EpisodeDetails">
         <p>{{ index + 1 + '.' + ' ' + episode.name }}</p>
         <p>{{ episode.runtime + 'm' }}</p>
-        <p class="EpisodeSummaryDetails">{{ episodeSummary(episode.summary) }}</p>
+        <p v-if="episode.summary" class="EpisodeSummaryDetails">{{ episodeSummary(episode.summary) }}</p>
       </div>
     </div>
   </div>

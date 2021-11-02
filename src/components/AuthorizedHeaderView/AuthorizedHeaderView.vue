@@ -1,12 +1,12 @@
 <template>
   <header :class="[{ 'Header--bg': isScrolled }, 'Header']">
     <router-link :to="homeRoute">
-      <Logo class="Header__logo" />
+      <Logo class="Header__logo"/>
     </router-link>
 
-   <div class="Header__search" :class="[{ 'Header__search--active': search }, 'Header__search']">
+    <div class="Header__search" :class="[{ 'Header__search--active': search }, 'Header__search']">
       <label class="flex-jc">
-        <font-awesome-icon :icon="['fas', 'search']" class="Header__search-icon" />
+        <font-awesome-icon :icon="['fas', 'search']" class="Header__search-icon"/>
         <input
             name="search"
             type="text"
@@ -18,11 +18,11 @@
     </div>
 
     <div class="Header__actions">
-      <ProfileDropdown />
+      <ProfileDropdown/>
       <button :class="[{ 'hamburger--active': isMenuOpened }, 'hamburger', 'button']" v-on:click="toggleSidebar">
-        <span />
-        <span />
-        <span />
+        <span/>
+        <span/>
+        <span/>
       </button>
     </div>
   </header>
@@ -30,8 +30,7 @@
 
 <script>
 import Logo from '../../assets/images/srtimm-logo.svg';
-import { routes } from '@/constants/constants';
-import debounce from '../../utilities/debounce';
+import {routes} from '@/constants/constants';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 export default {
@@ -57,15 +56,14 @@ export default {
     path() {
       this.isMenuOpened = false;
     },
-    search: debounce(function(value) {
+    search: function (value) {
       this.$router.push(`${routes.search}/${value}`);
-    }, 600),
+    }
   },
   methods: {
     handleScroll() {
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      if (currentScrollPosition > 30) return this.isScrolled = true;
-      else return this.isScrolled = false;
+      return currentScrollPosition > 30;
     },
     toggleSidebar() {
       this.isMenuOpened = !this.isMenuOpened;
